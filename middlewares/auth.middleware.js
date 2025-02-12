@@ -1,12 +1,15 @@
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../config/env";
-import User from "../models/user.model";
+import { JWT_SECRET } from "../config/env.js";
+import User from "../models/user.model.js";
 
 const authorize = async (req, res, next) => {
   try {
     let token;
 
-    if (req.headers.authorization && req.authorization.statsWith("Bearer")) {
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
       token = req.headers.authorization.split(" ")[1];
     }
 
@@ -24,5 +27,9 @@ const authorize = async (req, res, next) => {
 
     req.user = user;
     next();
-  } catch (error) {}
+  } catch (error) {
+    res.status(401).json({ message: "Unauthorized", error: error.message });
+  }
 };
+
+export default authorize;
