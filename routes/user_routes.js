@@ -1,15 +1,12 @@
 import { Router } from "express";
+import { getUser, getUsers } from "../controllers/user.controller.js";
 
 const user_router = Router();
 
 // Define user routes here
-user_router.get("/", (req, res) => {
-  res.send("User API");
-});
+user_router.get("/", getUsers);
 
-user_router.get("/:id", (req, res) => {
-  res.send(`User with ID: ${req.params.id}`);
-});
+user_router.get("/:id", getUser);
 
 user_router.post("/", (req, res) => {
   res.send("Create a new user");
