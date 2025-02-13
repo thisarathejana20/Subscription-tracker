@@ -1,4 +1,9 @@
 import { Router } from "express";
+import {
+  createSubscription,
+  getSubscription,
+} from "../controllers/subscription.controller.js";
+import authorize from "../middlewares/auth.middleware.js";
 
 const subscription_router = Router();
 
@@ -9,19 +14,9 @@ subscription_router.get("/", (req, res) => {
   res.status(500).json({ error: "Not implemented" });
 });
 
-subscription_router.get("/:id", (req, res) => {
-  // Implement logic to retrieve a subscription by ID from the database
-  // Example: const subscription = await getSubscriptionById(req.params.id);
-  // res.json(subscription);
-  res.status(500).json({ error: "Not implemented" });
-});
+subscription_router.get("/:id", authorize, getSubscription);
 
-subscription_router.post("/", (req, res) => {
-  // Implement logic to create a new subscription in the database
-  // Example: const newSubscription = await createSubscription(req.body);
-  // res.status(201).json(newSubscription);
-  res.status(500).json({ error: "Not implemented" });
-});
+subscription_router.post("/", authorize, createSubscription);
 
 subscription_router.put("/:id", (req, res) => {
   // Implement logic to update an existing subscription in the database
